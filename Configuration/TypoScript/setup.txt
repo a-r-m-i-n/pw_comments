@@ -46,6 +46,14 @@ plugin.tx_pwcomments {
 		sendMailTemplate = {$plugin.tx_pwcomments.settings.sendMailTemplate}
 		sendMailMimeType = {$plugin.tx_pwcomments.settings.sendMailMimeType}
 
+		sendMailOnCommentPublishTo = TEXT
+		sendMailOnCommentPublishTo {
+			data = register : tx_pwcomments_threadEmails
+			if.isTrue = {$plugin.tx_pwcomments.settings.sendMailOnCommentPublishToThread}
+		}
+
+		sendMailOnCommentPublishTemplate = {$plugin.tx_pwcomments.settings.sendMailOnCommentPublishTemplate}
+
 		enableCommentVotes = {$plugin.tx_pwcomments.settings.enableCommentVotes}
 		enableReplyVotes = {$plugin.tx_pwcomments.settings.enableReplyVotes}
 		enableVoting = {$plugin.tx_pwcomments.settings.enableVoting}
@@ -59,6 +67,9 @@ plugin.tx_pwcomments {
 		sendMailToAuthorAfterPublish = {$plugin.tx_pwcomments.settings.sendMailToAuthorAfterPublish}
 		sendMailToAuthorAfterPublishTemplate = {$plugin.tx_pwcomments.settings.sendMailToAuthorAfterPublishTemplate}
 		sitenameUsedInMails = {$plugin.tx_pwcomments.settings.sitenameUsedInMails}
+
+    pageTitle = TEXT
+    pageTitle.data = TSFE : indexedDocTitle
 
 		secondsBetweenTwoComments = {$plugin.tx_pwcomments.settings.secondsBetweenTwoComments}
 		linkUrlsInComments = {$plugin.tx_pwcomments.settings.linkUrlsInComments}

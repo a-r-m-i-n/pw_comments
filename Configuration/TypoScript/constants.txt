@@ -66,6 +66,12 @@ plugin.tx_pwcomments {
       moderateNewComments = 1
       # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailOnNewCommentsTo
       sendMailOnNewCommentsTo =
+
+      # cat=plugin.tx_pwcomments/replying; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailOnCommentPublishToThread
+      sendMailOnCommentPublishToThread = 0
+      # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailOnCommentPublishTemplate
+      sendMailOnCommentPublishTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/mailOnCommentPublish.html
+
       # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailTemplate
       sendMailTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/mail.html
       # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailMimeType

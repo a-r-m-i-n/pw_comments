@@ -1,0 +1,10 @@
+{namespace pw=T3\PwComments\ViewHelpers}<f:format.raw><f:translate key="tx_pwcomments.mailOnCommentPublish.salutation" />
+<f:if condition="{comment.parentComment}"><f:then><f:translate key="tx_pwcomments.mailOnCommentPublish.newCommentReplyHasBeenPublished" arguments="{0:settings.pageTitle}"/></f:then><f:else><f:translate key="tx_pwcomments.mailOnCommentPublish.newCommentHasBeenPublished" arguments="{0:settings.pageTitle}"/></f:else></f:if>
+<f:render partial="PageLink" arguments="{comment:comment}" />
+---------------------------------------------------
+
+<f:translate key="tx_pwcomments.notificationMail.name" />{f:if(condition: '{comment.author}', then: '{comment.author.username} {f:translate(key:\'tx_pwcomments.notificationMail.registred\')}', else: '{comment.authorName}')}
+<f:translate key="tx_pwcomments.notificationMail.mail" />{f:if(condition: '{comment.author}', then: '{comment.author.email}', else: '{comment.authorMail}')}
+
+<f:translate key="tx_pwcomments.notificationMail.comment" />
+{comment.message}</f:format.raw>
