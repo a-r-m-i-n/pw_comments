@@ -118,10 +118,10 @@
 				<source>Hello,</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.notificationMail.newCommentWithModerationHasBeenSubmitted" xml:space="preserve">
-				<source>a new comment has been submitted and awaits your approval.</source>
+				<source>a new comment to "%s" has been submitted and awaits your approval.</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.notificationMail.newCommentHasBeenSubmitted" xml:space="preserve">
-				<source>a new comment has been submitted.</source>
+				<source>a new comment to "%s" has been submitted.</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.notificationMail.linkToArticle" xml:space="preserve">
 				<source>Link to article:</source>
@@ -157,7 +157,7 @@
 				<source>Hello,</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.mailToAuthorAfterPublish.newCommentWithModerationHasBeenPublished" xml:space="preserve">
-				<source>your comment has been published, on this page:</source>
+				<source>your comment to "%s" has been published, on this page:</source>
 			</trans-unit>
 			<trans-unit id="mailSentToAuthorAfterPublish" xml:space="preserve">
 				<source>The author of this comment (%s) has been notified by mail.</source>
@@ -184,7 +184,7 @@
 				<source>Could not find comment to publish</source>
 			</trans-unit>
 			<trans-unit id="commentPublished" xml:space="preserve">
-				<source>The comment has been publish</source>
+				<source>The comment has been published</source>
 			</trans-unit>
             <trans-unit id="showComments" xml:space="preserve">
 				<source>Show comments</source>
@@ -203,6 +203,15 @@
 			</trans-unit>
 			<trans-unit id="pageModuleNotice" xml:space="preserve">
 				<source>Page Module Notice: Displays info about comments on current page as notice in page module.</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.mailOnCommentPublish.salutation" xml:space="preserve">
+				<source>Hello,</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.mailOnCommentPublish.newCommentHasBeenPublished" xml:space="preserve">
+				<source>A new comment to "%s" has been posted.</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.mailOnCommentPublish.newCommentReplyHasBeenPublished" xml:space="preserve">
+				<source>A new comment reply to "%s" has been posted.</source>
 			</trans-unit>
 		</body>
 	</file>

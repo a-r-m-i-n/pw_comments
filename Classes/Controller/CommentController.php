@@ -137,10 +137,16 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if ($this->settingsUtility === null) {
             $this->settingsUtility = GeneralUtility::makeInstance(Settings::class);
         }
+
+        $GLOBALS['TSFE']->register['tx_pwcomments_threadEmails'] = '###THREAD_EMAILS###';
+
         $this->settings = $this->settingsUtility->renderConfigurationArray(
             $this->settings,
             !isset($this->settings['_skipMakingSettingsRenderable']) || !$this->settings['_skipMakingSettingsRenderable']
         );
+
+        unset($GLOBALS['TSFE']->register['tx_pwcomments_threadEmails']);
+
         if ($this->mailUtility === null) {
             $this->mailUtility = GeneralUtility::makeInstance(Mail::class);
         }
@@ -302,6 +308,8 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if (isset($this->settings['moderateNewComments']) && $this->settings['moderateNewComments']) {
             $anchor = '#' . $this->settings['successfulAnchor'];
         } else {
+            $this->sendCommentNotificationEmails($newComment);
+
             $anchor = '#' . $this->settings['commentAnchorPrefix'] . $newComment->getUid();
         }
 
@@ -414,6 +422,8 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 )
             );
         }
+
+        $this->sendCommentNotificationEmails($comment);
 
         $this->addFlashMessage(LocalizationUtility::translate('commentPublished', 'PwComments'));
         $this->redirectToUri($this->buildUriByUid($this->pageUid, true));
@@ -610,6 +620,52 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
 
     /**
+     * Sends comment publication notification emails to other recipients, e.g. parent comment authors.
+     *
+     * @param Comment $comment
+     * @return void
+     */
+    protected function sendCommentNotificationEmails(Comment $comment)
+    {
+        if (empty($this->settings['sendMailOnCommentPublishTo'])) {
+            return;
+        }
+
+        $emailRecipients = $this->settings['sendMailOnCommentPublishTo'];
+
+        if (strpos($this->settings['sendMailOnCommentPublishTo'], '###THREAD_EMAILS###') !== false) {
+            $threadAuthorEmails = '';
+
+            $parentComment = $comment->getParentComment();
+            while ($parentComment !== null) {
+                $commentAuthorEmail = $parentComment->getAuthorMail();
+
+                if ($parentComment->getAuthor()) {
+                    $commentAuthorEmail = $parentComment->getAuthor()->getEmail();
+                }
+
+                if (!empty($commentAuthorEmail) && GeneralUtility::validEmail($commentAuthorEmail)) {
+                    $threadAuthorEmails .= ',' . $commentAuthorEmail;
+                }
+
+                $parentComment = $parentComment->getParentComment();
+            }
+        }
+
+        $emailRecipients = str_replace('###THREAD_EMAILS###', $threadAuthorEmails ?? '', $emailRecipients);
+
+        $emailRecipients = array_unique(GeneralUtility::trimExplode(',', $emailRecipients, true));
+
+        foreach ($emailRecipients as $email) {
+            $this->mailUtility->setFluidTemplate($this->makeFluidTemplateObject());
+            $this->mailUtility->setControllerContext($this->controllerContext);
+            $this->mailUtility->setReceivers($email);
+            $this->mailUtility->setTemplatePath($this->settings['sendMailOnCommentPublishTemplate']);
+            $this->mailUtility->sendMail($comment);
+        }
+    }
+
+    /**
      * Returns count of comments and/or comments and replies.
      *
      * @param QueryResult $comments
@@ -648,7 +704,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
 
     /**
-     * Don't show Error Message because of own genereated error Messages
+     * Don't show Error Message because of own generated error Messages
      *
      * @return bool|string The flash message or FALSE if no flash message should be set
      */

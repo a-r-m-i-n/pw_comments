@@ -176,6 +176,12 @@
             <trans-unit id="settings.termsTypolinkParameter" xml:space="preserve">
                 <source>Typolink parameters to terms (in string, next to checkbox to click)</source>
 			</trans-unit>
+            <trans-unit id="settings.sendMailOnCommentPublishToThread" xml:space="preserve">
+                <source>Send email to thread participants when replying to a comment</source>
+			</trans-unit>
+            <trans-unit id="settings.sendMailOnCommentPublishTemplate" xml:space="preserve">
+                <source>Send mail to thread participants template: The path to the Fluid template that should be used for comment publication notification e-mails e.g. sent to participants in the comment thread.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
