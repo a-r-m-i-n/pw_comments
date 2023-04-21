@@ -146,7 +146,7 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $this->mailUtility->setSettings($this->settings);
         $this->pageUid = $GLOBALS['TSFE']->id;
-        $this->commentStorageUid = is_numeric($this->settings['storagePid'])
+        $this->commentStorageUid = is_numeric($this->settings['storagePid'] ?? null)
             ? $this->settings['storagePid']
             : $this->pageUid;
         $this->currentUser = isset($GLOBALS['TSFE']->fe_user->user['uid']) ? $GLOBALS['TSFE']->fe_user->user : [];
