@@ -1,3 +1,14 @@
+# /!\ CAUTION /!\
+
+## pw_comments has been moved to new owner
+
+New home for pw_comments can get found here: https://github.com/teamneusta/pw_comments
+
+Also, the Composer package name has been updated to: [`teamneusta/pw_comments`](https://packagist.org/packages/teamneusta/pw_comments)
+
+**No more updates in this Git repository!**
+
+
 # pw_comments
 
 Powerful TYPO3 CMS extension for providing comments, including replies on comments and votings, 
