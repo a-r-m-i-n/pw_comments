@@ -22,6 +22,7 @@ plugin.tx_pwcomments {
 		commentAnchorPrefix = {$plugin.tx_pwcomments.settings.commentAnchorPrefix}
 		showCommentAnchor = {$plugin.tx_pwcomments.settings.showCommentAnchor}
 		writeCommentAnchor = {$plugin.tx_pwcomments.settings.writeCommentAnchor}
+		updateCommentAnchor = {$plugin.tx_pwcomments.settings.updateCommentAnchor}
 		successfulAnchor = {$plugin.tx_pwcomments.settings.successfulAnchor}
 		customMessagesAnchor = {$plugin.tx_pwcomments.settings.customMessagesAnchor}
 
@@ -38,12 +39,19 @@ plugin.tx_pwcomments {
 		showRepliesToComments = {$plugin.tx_pwcomments.settings.showRepliesToComments}
 		countReplies = {$plugin.tx_pwcomments.settings.countReplies}
 
+		enableEditingComments = {$plugin.tx_pwcomments.settings.enableEditingComments}
+		enableDeletingComments = {$plugin.tx_pwcomments.settings.enableDeletingComments}
+
 		invertCommentSorting = {$plugin.tx_pwcomments.settings.invertCommentSorting}
 		invertReplySorting = {$plugin.tx_pwcomments.settings.invertReplySorting}
 
 		moderateNewComments = {$plugin.tx_pwcomments.settings.moderateNewComments}
 		sendMailOnNewCommentsTo = {$plugin.tx_pwcomments.settings.sendMailOnNewCommentsTo}
+		sendMailOnNewCommentsToNewsAuthor = {$plugin.tx_pwcomments.settings.sendMailOnNewCommentsToNewsAuthor}
 		sendMailTemplate = {$plugin.tx_pwcomments.settings.sendMailTemplate}
+		sendMailUpdateTemplate = {$plugin.tx_pwcomments.settings.sendMailUpdateTemplate}
+		sendMailNewsAuthorTemplate = {$plugin.tx_pwcomments.settings.sendMailNewsAuthorTemplate}
+		sendMailNewsAuthorUpdateTemplate = {$plugin.tx_pwcomments.settings.sendMailNewsAuthorUpdateTemplate}
 		sendMailMimeType = {$plugin.tx_pwcomments.settings.sendMailMimeType}
 
 		enableCommentVotes = {$plugin.tx_pwcomments.settings.enableCommentVotes}
@@ -56,6 +64,7 @@ plugin.tx_pwcomments {
 		senderName = {$plugin.tx_pwcomments.settings.senderName}
 		sendMailToAuthorAfterSubmit = {$plugin.tx_pwcomments.settings.sendMailToAuthorAfterSubmit}
 		sendMailToAuthorAfterSubmitTemplate = {$plugin.tx_pwcomments.settings.sendMailToAuthorAfterSubmitTemplate}
+		sendMailToAuthorAfterSubmitUpdateTemplate = {$plugin.tx_pwcomments.settings.sendMailToAuthorAfterSubmitUpdateTemplate}
 		sendMailToAuthorAfterPublish = {$plugin.tx_pwcomments.settings.sendMailToAuthorAfterPublish}
 		sendMailToAuthorAfterPublishTemplate = {$plugin.tx_pwcomments.settings.sendMailToAuthorAfterPublishTemplate}
 		sitenameUsedInMails = {$plugin.tx_pwcomments.settings.sitenameUsedInMails}
@@ -120,6 +129,7 @@ lib.pwCommentsIndex {
 			1 = index
 			2 = upvote
 			3 = downvote
+			5 = delete
 		}
 	}
 
@@ -128,14 +138,16 @@ lib.pwCommentsIndex {
 	settings =< plugin.tx_pwcomments.settings
 }
 
-# Lib for form to post new comments
-lib.pwCommentsNew < lib.pwCommentsIndex
-lib.pwCommentsNew {
+# Lib for form to post new comments or edit existing comments
+lib.pwComments < lib.pwCommentsIndex
+lib.pwComments {
 	switchableControllerActions {
 		Comment {
 			1 = new
 			2 = create
-			3 = confirmComment
+			3 = edit
+			4 = update
+			5 = confirmComment
 		}
 	}
 }

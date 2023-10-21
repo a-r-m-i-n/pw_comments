@@ -14,17 +14,21 @@ Mails to comment author
    When you want to work with mail notifications, you should configure an absolute URL (like ``https://my-domain.com/``) in
    TYPO3's **site configuration** instead of a plain ``/``. This is required by TypoLink to create absolute URLs in mails.
 
-===================================== ========
-Property                               Type
-===================================== ========
-senderAddress_                         string
-senderName_                            string
-sendMailToAuthorAfterSubmit_           boolean
-sendMailToAuthorAfterSubmitTemplate_   string
-sendMailToAuthorAfterPublish_          boolean
-sendMailToAuthorAfterPublishTemplate_  string
-sitenameUsedInMails_  string
-===================================== ========
+=====================================       ========
+Property                                      Type
+=====================================       ========
+senderAddress_                               string
+senderName_                                  string
+sendMailToAuthorAfterSubmit_                 boolean
+sendMailToAuthorAfterSubmitTemplate_         string
+sendMailToAuthorAfterSubmitUpdateTemplate_   string
+sendMailToAuthorAfterPublish_                boolean
+sendMailToAuthorAfterPublishTemplate_        string
+sendMailOnNewCommentsToNewsAuthor_           boolean
+sendMailNewsAuthorTemplate_                  string
+sendMailNewsAuthorUpdateTemplate_            string
+sitenameUsedInMails_                         string
+=====================================       ========
 
 .. _senderAddress:
 
@@ -82,6 +86,21 @@ sendMailToAuthorAfterSubmitTemplate
    Description
       Defines the path to the Fluid template which should be used for the e-mail to comment author.
 
+.. _sendMailToAuthorAfterSubmitUpdateTemplate:
+
+sendMailToAuthorAfterSubmitUpdateTemplate
+"""""""""""""""""""""""""""""""""""
+.. container:: table-row
+
+   Property
+      sendMailToAuthorAfterSubmitUpdateTemplate
+   Data type
+      string
+   Default
+      EXT:pw_comments/[...]/mailToAuthorAfterUpdateSubmit.html
+   Description
+      Defines the path to the Fluid template which should be used for the e-mail to comment author on editing.
+
 .. _sendMailToAuthorAfterPublish:
 
 sendMailToAuthorAfterPublish
@@ -113,6 +132,51 @@ sendMailToAuthorAfterPublishTemplate
    Description
       Defines the path to the Fluid template which should be used for the e-mail to comment author.
 
+.. _sendMailOnNewCommentsToNewsAuthor:
+
+sendMailOnNewCommentsToNewsAuthor
+"""""""""""""""""""
+.. container:: table-row
+
+   Property
+      sendMailOnNewCommentsToNewsAuthor
+   Data type
+      boolean
+   Description
+      If this option is enabled, the author of the news article commented on receives a mail after a comment has been published.
+
+.. _sendMailNewsAuthorTemplate:
+
+sendMailNewsAuthorTemplate
+""""""""""""""""""""""""""
+.. container:: table-row
+
+   Property
+      sendMailNewsAuthorTemplate
+   Data type
+      string
+   Default
+      EXT:pw_comments/[...]/newsMail.html
+   Description
+      Defines the path to the Fluid template which should be used for the e-mail to comment author.
+
+.. _sendMailNewsAuthorUpdateTemplate:
+
+sendMailToAuthorAfterSubmitTemplate
+"""""""""""""""""""""""""""""""""""
+.. container:: table-row
+
+   Property
+      sendMailNewsAuthorUpdateTemplate
+   Data type
+      string
+   Default
+      EXT:pw_comments/[...]/updateNewsMail.html
+   Description
+      Defines the path to the Fluid template which should be used for the e-mail to comment author.
+
+
+
 .. _sitenameUsedInMails:
 
 sitenameUsedInMails
@@ -125,3 +189,4 @@ sitenameUsedInMails
       string
    Description
       When this option is set, it replaces the getHostname() output, used in mail subject.
+

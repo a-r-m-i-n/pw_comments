@@ -1,0 +1,15 @@
+{namespace pw=T3\PwComments\ViewHelpers}
+{namespace n=GeorgRinger\News\ViewHelpers}
+<f:translate key="tx_pwcomments.notificationMail.salutation" />
+<f:translate key="tx_pwcomments.notificationMail.updateCommentHasBeenSubmitted" />
+
+<f:translate key="tx_pwcomments.notificationMail.linkToArticle" />
+{site}<n:link newsItem="{news}" uriOnly="true">{news.title}</n:link>#{settings.commentAnchorPrefix}{comment.uid}
+
+---------------------------------------------------
+
+<f:translate key="tx_pwcomments.notificationMail.name" />{f:if(condition: '{comment.author}', then: '{comment.author.username} {f:translate(key:\'tx_pwcomments.notificationMail.registred\')}', else: '{comment.authorName}')}
+<f:translate key="tx_pwcomments.notificationMail.mail" />{f:if(condition: '{comment.author}', then: '{comment.author.email}', else: '{comment.authorMail}')}
+
+<f:translate key="tx_pwcomments.notificationMail.comment" />
+{comment.message}

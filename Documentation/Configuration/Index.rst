@@ -26,7 +26,7 @@ add the following TypoScript lines to your main column output in order to output
       20 < lib.pwCommentsIndex
 
       # Write new comment
-      30 < lib.pwCommentsNew
+      30 < lib.pwComments
    }
 
 This will display the comments on every page. You can use any conditions you want
@@ -130,7 +130,7 @@ In TypoScript this could look like this:
 
       # And add comments if not done yet
       lib.content.80 < lib.pwCommentsIndex
-      lib.content.85 < lib.pwCommentsNew
+      lib.content.85 < lib.pwComments
    [global]
 
 First you check the condition "Am I currently on a news detail view?". If this is the case, the GET-parameter
@@ -154,7 +154,7 @@ lib.pwCommentsIndex
 ^^^^^^^^^^^^^^^^^^^
 This displays the comments with the Fluid template engine.
 
-lib.pwCommentsNew
+lib.pwComments
 ^^^^^^^^^^^^^^^^^
 This displays the form for posting comments. You can disclaim this form if you want to make the comments read only.
 
@@ -189,7 +189,7 @@ The static setup provides some basic CSS styles. If you want to disable them sim
 
 Author or authorName?
 ---------------------
-The author of a comment is saved in two diffent ways: If an unregistred user writes a comment the fields authorName
+The author of a comment is saved in two diffent ways: If an unregistered user writes a comment the fields authorName
 and authorMail are filled. If the user is registered the model of the user is linked to the comment in the field author.
 
 authorIdent

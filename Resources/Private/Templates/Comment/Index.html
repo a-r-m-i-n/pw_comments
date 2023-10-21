@@ -2,10 +2,10 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-		<div id="{settings.showCommentAnchor}" class="comments-container">
+	<div id="{settings.showCommentAnchor}" class="comments-container">
 			<h1><f:translate key="tx_pwcomments.comments" /> ({commentCount})</h1>
 			<f:if condition="{hasCustomMessages}">
-				<a name="{settings.customMessagesAnchor}"></a>
+				<a id="{settings.customMessagesAnchor}"></a>
 				<f:flashMessages />
 			</f:if>
 			<f:if condition="{comments -> f:count()} > 0">
@@ -14,7 +14,7 @@
 						<f:for each="{comments}" as="comment" iteration="commentIterator">
 							<li>
 								<div class="comment-main-level comment{f:if(condition:'{commentToReplyTo.uid} == {comment.uid}', then:' replyingToThisComment')}{f:if(condition:'{commentIterator.isFirst}', then:' first-comment')}{f:if(condition:'{commentIterator.isLast}', then:' last-comment')}" id="{settings.commentAnchorPrefix}{comment.uid}">
-									<f:render partial="Comment" arguments="{comment:comment, commentToReplyTo:commentToReplyTo, upvotedCommentUids:upvotedCommentUids, downvotedCommentUids:downvotedCommentUids}" />
+									<f:render partial="Comment" arguments="{comment:comment, commentToReplyTo:commentToReplyTo, upvotedCommentUids:upvotedCommentUids, downvotedCommentUids:downvotedCommentUids, userIdent: userIdent}" />
 								</div>	
 								<f:if condition="{settings.showRepliesToComments} == 1">
 									<f:if condition="{comment.replies -> f:count()} > 0">
@@ -22,7 +22,7 @@
 										<ul class="comments-list reply-list">
 											<f:for each="{comment.replies}" as="reply" iteration="replyIterator">
 												<li class="comment-reply{f:if(condition:'{replyIterator.isFirst}', then:' first-reply')}{f:if(condition:'{replyIterator.isLast}', then:' last-reply')}" id="{settings.commentAnchorPrefix}{reply.uid}">
-													<f:render partial="Comment" arguments="{comment:reply, upvotedCommentUids:upvotedCommentUids, downvotedCommentUids:downvotedCommentUids}" />
+													<f:render partial="Comment" arguments="{comment:reply, upvotedCommentUids:upvotedCommentUids, downvotedCommentUids:downvotedCommentUids, userIdent: userIdent}" />
 												</li>
 											</f:for>
 										</ul>

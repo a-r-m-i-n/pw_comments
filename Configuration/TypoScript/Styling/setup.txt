@@ -217,6 +217,11 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 	-moz-border-radius: 0 0 4px 4px;
 	border-radius: 0 0 4px 4px;
 }
+.comment-box .comment-content .comment-tstamp {
+    font-size: 13px;
+    color: #999;
+    padding-top: 24px;
+}
 
 .comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
 .comment-box .comment-name.by-author:after {
@@ -246,11 +251,15 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 
 .comment-actions a.upvote,
 .comment-actions a.downvote,
-.comment-actions a.reply {
+.comment-actions a.reply,
+.comment-actions a.edit,
+.comment-actions a.delete {
 	margin: 0 2px;
 }
 
-.comment-actions a.reply {
+.comment-actions a.reply,
+.comment-actions a.edit,
+.comment-actions a.delete {
 	margin-left: 25px;
 	vertical-align: text-bottom;
 }
@@ -266,7 +275,9 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 
 .comment-actions a.upvote:before,
 .comment-actions a.downvote:before,
-.comment-actions a.reply:before {
+.comment-actions a.reply:before,
+.comment-actions a.edit:before,
+.comment-actions a.delete:before {
 	content: '';
 	background: url('../../../typo3conf/ext/pw_comments/Resources/Public/Icons/thumbs-up.svg') no-repeat;
 	background-size: cover;
@@ -280,7 +291,9 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 
 .comment-actions a.upvote:hover:before,
 .comment-actions a.downvote:hover:before,
-.comment-actions a.reply:hover:before {
+.comment-actions a.reply:hover:before,
+.comment-actions a.edit:hover:before,
+.comment-actions a.delete:hover:before {
 	opacity: 1;
 }
 
@@ -291,6 +304,15 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 .comment-actions a.reply:before {
 	background-image: url('../../../typo3conf/ext/pw_comments/Resources/Public/Icons/reply.svg');
 }
+
+.comment-actions a.edit:before {
+	background-image: url('../../../typo3conf/ext/pw_comments/Resources/Public/Icons/edit.svg');
+}
+
+.comment-actions a.delete:before {
+	background-image: url('../../../typo3conf/ext/pw_comments/Resources/Public/Icons/delete.svg');
+}
+
 
 .comment-actions a.upvote.voted:before {
 	opacity: 1;
@@ -304,33 +326,39 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 .comment-actions .voted-positive { color: green !important; }
 .comment-actions .voted-negative { color: red !important; }
 
-#writeComment {
+#writeComment, #updateComment {
 	max-width: 768px;
 	margin: 20px auto;
 }
 
-#writeComment h3 {
+#writeComment h3,
+#updateComment h3{
 	padding: 20px 0 8px;
 }
 
-#writeComment div.hide_initally {
+#writeComment div.hide_initally,
+#updateComment div.hide_initally {
 	display: none;
 }
 
-#writeComment label {
+#writeComment label,
+#updateComment label {
 	display: block;
 }
 
-#writeComment label span {
+#writeComment label span,
+#updateComment label span {
 	font-size: 10px;
 	color: #777;
 }
-#writeComment label span a {
+#writeComment label span a,
+#updateComment label span a {
 	text-decoration: none;
 	color: #777;
 }
 
-#writeComment input[type=text] {
+#writeComment input[type=text],
+#updateComment input[type=text]{
 	font-family: Verdana,Tahoma,Arial,sans-serif;
 	font-size: 15px;
 	width: 66%;
@@ -338,7 +366,8 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 	margin-bottom: 14px;
 }
 
-#writeComment textarea {
+#writeComment textarea,
+#updateComment textarea {
 	width: 100%;
 	line-height: 16px;
 	padding: 5px;
@@ -347,7 +376,8 @@ plugin.tx_pwcomments._CSS_DEFAULT_STYLE (
 	margin-bottom: 10px;
 }
 
-#writeComment input.button {
+#writeComment input.button,
+#updateComment input.button {
 	padding: 2px 10px;
     margin-top: 15px;
 	margin-bottom: 0;

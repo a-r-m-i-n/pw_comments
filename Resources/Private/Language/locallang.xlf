@@ -36,32 +36,38 @@
 			<trans-unit id="tx_pwcomments.newComment.loggedInAs" xml:space="preserve">
 				<source>You are logged in as:</source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.name" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.name" xml:space="preserve">
 				<source>Your name:</source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.mail" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.mail" xml:space="preserve">
 				<source>Your e-mail address:</source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.hiddenField" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.hiddenField" xml:space="preserve">
 				<source>Do not fill out!</source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.comment" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.comment" xml:space="preserve">
 				<source>Comment:</source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.termsBefore" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.termsBefore" xml:space="preserve">
 				<source>I understand and accept the </source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.terms" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.terms" xml:space="preserve">
 				<source>terms</source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.termsAfter" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.termsAfter" xml:space="preserve">
 				<source>.</source>
 			</trans-unit>
-			<trans-unit id="tx_pwcomments.newComment.submit" xml:space="preserve">
+			<trans-unit id="tx_pwcomments.comment.submit" xml:space="preserve">
 				<source>Submit</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.reply" xml:space="preserve">
 				<source>Reply</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.edit" xml:space="preserve" approved="yes">
+				<source>Edit</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.delete" xml:space="preserve" approved="yes">
+				<source>Delete</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.noComments" xml:space="preserve">
 				<source>No comments found!</source>
@@ -75,6 +81,12 @@
 			<trans-unit id="tx_pwcomments.thanks" xml:space="preserve">
 				<source>Thanks for your comment!</source>
 			</trans-unit>
+			<trans-unit id="tx_pwcomments.updateSuccess" xml:space="preserve">
+				<source>Your comment has been successfully edited!</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.editComment" xml:space="preserve">
+				<source>Edit your comment</source>
+			</trans-unit>
 			<trans-unit id="tx_pwcomments.moderationNotice" xml:space="preserve">
 				<source>Your comment has to be checked before publishing. Thank you for your patience!</source>
 			</trans-unit>
@@ -83,6 +95,12 @@
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.relativeDate.wrapAbsolute" xml:space="preserve">
 				<source>at %s</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.relativeDate.updateWrap" xml:space="preserve">
+				<source>Edited %s ago</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.relativeDate.updateWrapAbsolute" xml:space="preserve">
+				<source>Edited at %s</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.relativeDate.fewSeconds" xml:space="preserve">
 				<source>few seconds</source>
@@ -114,6 +132,9 @@
 			<trans-unit id="tx_pwcomments.notificationMail.subject" xml:space="preserve">
 				<source>New comment on %s</source>
 			</trans-unit>
+			<trans-unit id="tx_pwcomments.notificationMail.update.subject" xml:space="preserve">
+				<source>Updated comment on %s</source>
+			</trans-unit>
 			<trans-unit id="tx_pwcomments.notificationMail.salutation" xml:space="preserve">
 				<source>Hello,</source>
 			</trans-unit>
@@ -122,6 +143,12 @@
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.notificationMail.newCommentHasBeenSubmitted" xml:space="preserve">
 				<source>a new comment has been submitted.</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.notificationMail.updateCommentWithModerationHasBeenSubmitted" xml:space="preserve">
+				<source>a updated comment has been submitted and awaits your approval.</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.notificationMail.updateCommentHasBeenSubmitted" xml:space="preserve">
+				<source>a updated comment has been submitted.</source>
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.notificationMail.linkToArticle" xml:space="preserve">
 				<source>Link to article:</source>
@@ -179,6 +206,9 @@
 			</trans-unit>
 			<trans-unit id="tx_pwcomments.custom.votingDisabled" xml:space="preserve">
 				<source>To vote for comments, please login.</source>
+			</trans-unit>
+			<trans-unit id="tx_pwcomments.custom.deletedComment" xml:space="preserve" approved="yes">
+				<source>Your Comment was successful deleted.</source>
 			</trans-unit>
 			<trans-unit id="noCommentAvailable" xml:space="preserve">
 				<source>Could not find comment to publish</source>

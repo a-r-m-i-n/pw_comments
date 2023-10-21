@@ -8,6 +8,8 @@ namespace T3\PwComments\Utility;
  *  |     2015 Dennis Roemmich <dennis@roemmich.eu>
  *  |     2016-2017 Christian Wolfram <c.wolfram@chriwo.de>
  */
+
+use GeorgRinger\News\Domain\Repository\NewsRepository;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext;
@@ -156,15 +158,23 @@ class Mail
         if (!file_exists($mailTemplate)) {
             throw new \Exception('Mail template (' . $mailTemplate . ') not found. ');
         }
-
         $this->fluidTemplate->setTemplatePathAndFilename($mailTemplate);
-        $this->fluidTemplate->assignMultiple(
-            [
-                'hash' => $hash,
-                'comment' => $comment,
-                'settings' => $this->settings
-            ]
-        );
+        $params = [
+            'hash' => $hash,
+            'comment' => $comment,
+            'settings' => $this->settings
+        ];
+
+        if (isset($this->settings['sendMailOnNewCommentsToNewsAuthor'])) {
+            $newsRepository = GeneralUtility::makeInstance(NewsRepository::class);
+            $news = $newsRepository->findByUid($comment->getEntryUid());
+            if (null !== $news) {
+                $params['news'] = $news;
+                $params['site'] = GeneralUtility::getIndpEnv('HTTP_HOST');
+            }
+        }
+        $this->fluidTemplate->assignMultiple($params);
+
         return $this->fluidTemplate->render();
     }
 

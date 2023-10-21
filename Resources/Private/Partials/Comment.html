@@ -1,14 +1,20 @@
 {namespace pw=T3\PwComments\ViewHelpers}
-
 <f:if condition="{settings.showAvatar}">
 	<div class="comment-avatar">
-		<f:if condition="{settings.showGravatarImage}">
+		<f:if condition="{comment.author.image.0}">
 			<f:then>
-				<pw:Gravatar email="{comment.commentAuthorMailAddress}" size="{settings.gravatarSize}" default="{settings.gravatarDefault}"
-							alt="{comment.author.name}{comment.authorName}" class="comment-author-image"/>
+				<f:image image="{comment.author.image.0}" class="comment-author-image"/>
 			</f:then>
+			<f:else if="{settings.showGravatarImage}">
+				<f:then>
+					<pw:Gravatar email="{comment.commentAuthorMailAddress}" size="{settings.gravatarSize}" default="{settings.gravatarDefault}"
+								 alt="{comment.author.name}{comment.authorName}" class="comment-author-image"/>
+				</f:then>
+			</f:else>
 			<f:else>
-				<f:image src="{f:uri.resource(path:'Icons/avatar.svg')}" class="comment-author-image default-user-icon" />
+				<f:then>
+					<f:image src="{f:uri.resource(path:'Icons/avatar.svg')}" class="comment-author-image default-user-icon" />
+				</f:then>
 			</f:else>
 		</f:if>
 	</div>
@@ -17,7 +23,7 @@
 <div class="comment-box">
 	<div class="comment-head">
 		<h5 class="comment-name">{f:if(condition: '{comment.author}', then: '{comment.author.username}', else: '{comment.authorName}')}</h5>
-		<span class="comment-date" title="{pw:format.date(timestamp:'{comment.crdate}', format:'%d.%m.%Y %T')}"> <pw:format.relativeDate timestamp="{comment.crdate}" format="{settings.relativeDate.absoluteFormatFallback}" wrap="{f:translate(key:'tx_pwcomments.relativeDate.wrap')}" wrapAbsolute="{f:translate(key:'tx_pwcomments.relativeDate.wrapAbsolute')}" /></span>
+		<span class="comment-date" title="{pw:format.date(timestamp:'{comment.crdate}', format:'%d.%m.%Y %T')}"><pw:format.relativeDate timestamp="{comment.crdate}" format="{settings.relativeDate.absoluteFormatFallback}" wrap="{f:translate(key:'tx_pwcomments.relativeDate.wrap')}" wrapAbsolute="{f:translate(key:'tx_pwcomments.relativeDate.wrapAbsolute')}"/></span>
 
 		<div class="comment-actions">
 			<f:if condition="{settings.enableCommentVotes}">
@@ -48,9 +54,28 @@
 					</f:else>
 				</f:if>
 			</f:if>
+			<f:if condition="{comment.authorIdent} == {userIdent}">
+				<f:then>
+					<f:if condition="{settings.enableEditingComments}">
+						<f:link.action class="edit" action="edit" arguments="{updateComment: comment}"  section="{settings.updateCommentAnchor}" addQueryString="true">
+							<f:translate key="tx_pwcomments.edit" />
+						</f:link.action>
+					</f:if>
+					<f:if condition="{settings.enableDeletingComments}">
+						<f:link.action class="delete" action="delete" arguments="{commentUid: comment.uid}" addQueryString="true">
+							<f:translate key="tx_pwcomments.delete" />
+						</f:link.action>
+					</f:if>
+				</f:then>
+			</f:if>
 		</div>
 	</div>
 	<div class="comment-content">
 		<f:format.nl2br><f:format.raw>{comment.message}</f:format.raw></f:format.nl2br>
+		<f:if condition="{comment.crdate} !== {comment.tstamp}">
+			<div class="comment-tstamp">
+				<span title="{pw:format.date(timestamp:'{comment.tstamp}', format:'%d.%m.%Y %T')}">(<pw:format.relativeDate timestamp="{comment.tstamp}" format="{settings.relativeDate.absoluteFormatFallback}" wrap="{f:translate(key:'tx_pwcomments.relativeDate.updateWrap')}" wrapAbsolute="{f:translate(key:'tx_pwcomments.relativeDate.updateWrapAbsolute')}"/>)</span>
+			</div>
+		</f:if>
 	</div>
 </div>

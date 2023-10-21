@@ -16,6 +16,7 @@ Property                               Type
 commentAnchorPrefix_                   string
 showCommentAnchor_                     string
 writeCommentAnchor_                    string
+updateCommentAnchor_                    string
 successfulAnchor_                      string
 customMessagesAnchor_                  string
 ===================================== ========
@@ -65,6 +66,21 @@ writeCommentAnchor
       writeComment
    Description
       This anchor will appear in front of the comment form.
+
+.. _updateCommentAnchor:
+
+updateCommentAnchor
+""""""""""""""""""
+.. container:: table-row
+
+   Property
+      updateCommentAnchor
+   Data type
+      string
+   Default
+      updateComment
+   Description
+      This anchor will appear in front of the editing comment form.
 
 .. _successfulAnchor:
 

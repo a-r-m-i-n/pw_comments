@@ -8,6 +8,8 @@ namespace T3\PwComments\Controller;
  *  |     2015 Dennis Roemmich <dennis@roemmich.eu>
  *  |     2016-2017 Christian Wolfram <c.wolfram@chriwo.de>
  */
+
+use GeorgRinger\News\Domain\Repository\NewsRepository;
 use T3\PwComments\Domain\Model\Comment;
 use T3\PwComments\Domain\Model\Vote;
 use T3\PwComments\Domain\Repository\CommentRepository;
@@ -17,10 +19,14 @@ use T3\PwComments\Utility\HashEncryptionUtility;
 use T3\PwComments\Utility\Mail;
 use T3\PwComments\Utility\Settings;
 use T3\PwComments\Utility\StringUtility;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -208,12 +214,14 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             }
         }
+
         $this->view->assign('upvotedCommentUids', $upvotedCommentUids);
         $this->view->assign('downvotedCommentUids', $downvotedCommentUids);
 
         $this->view->assign('comments', $comments);
         $this->view->assign('commentCount', $this->calculateCommentCount($comments));
         $this->view->assign('commentToReplyTo', $commentToReplyTo);
+        $this->view->assign('userIdent', $this->currentAuthorIdent);
     }
 
     /**
@@ -254,8 +262,8 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $newComment->setAuthor($author);
         } else {
             $newComment->setAuthor(null);
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'tx_pwcomments_unregistredUserName', $newComment->getAuthorName());
-            $GLOBALS['TSFE']->fe_user->setKey('ses', 'tx_pwcomments_unregistredUserMail', $newComment->getAuthorMail());
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'tx_pwcomments_unregisteredUserName', $newComment->getAuthorName());
+            $GLOBALS['TSFE']->fe_user->setKey('ses', 'tx_pwcomments_unregisteredUserMail', $newComment->getAuthorMail());
         }
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'tx_pwcomments_lastComment', time());
 
@@ -279,6 +287,16 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
         $this->commentRepository->add($newComment);
         $this->getPersistenceManager()->persistAll();
+
+        if (isset($this->settings['sendMailOnNewCommentsToNewsAuthor']) && $this->settings['sendMailOnNewCommentsToNewsAuthor']) {
+            $newsRepository = GeneralUtility::makeInstance(NewsRepository::class);
+            $news = $newsRepository->findByUid($newComment->getEntryUid());
+            $this->mailUtility->setFluidTemplate($this->makeFluidTemplateObject());
+            $this->mailUtility->setControllerContext($this->controllerContext);
+            $this->mailUtility->setReceivers($news->getAuthorEmail());
+            $this->mailUtility->setTemplatePath($this->settings['sendMailNewsAuthorTemplate']);
+            $this->mailUtility->sendMail($newComment, HashEncryptionUtility::createHashForComment($newComment));
+        }
 
         if (isset($this->settings['sendMailOnNewCommentsTo']) && $this->settings['sendMailOnNewCommentsTo']) {
             $this->mailUtility->setFluidTemplate($this->makeFluidTemplateObject());
@@ -326,22 +344,189 @@ class CommentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         }
         $this->view->assign('commentToReplyTo', $commentToReplyTo);
 
-        // Get name of unregistred user
+        // Get name of unregistered user
         if ($newComment !== null && $newComment->getAuthorName()) {
-            $unregistredUserName = $newComment->getAuthorName();
+            $unregisteredUserName = $newComment->getAuthorName();
         } else {
-            $unregistredUserName = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tx_pwcomments_unregistredUserName');
+            $unregisteredUserName = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tx_pwcomments_unregisteredUserName');
         }
 
-        // Get mail of unregistred user
+        // Get mail of unregistered user
         if ($newComment !== null && $newComment->getAuthorMail()) {
-            $unregistredUserMail = $newComment->getAuthorMail();
+            $unregisteredUserMail = $newComment->getAuthorMail();
         } else {
-            $unregistredUserMail = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tx_pwcomments_unregistredUserMail');
+            $unregisteredUserMail = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tx_pwcomments_unregisteredUserMail');
         }
 
-        $this->view->assign('unregistredUserName', $unregistredUserName);
-        $this->view->assign('unregistredUserMail', $unregistredUserMail);
+        $this->view->assign('unregisteredUserName', $unregisteredUserName);
+        $this->view->assign('unregisteredUserMail', $unregisteredUserMail);
+    }
+
+    /**
+     * Edit action
+     *
+     * @param Comment|null $updateComment Comment
+     * @return void
+     *
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("updateComment")
+     */
+    public function editAction(Comment $updateComment = null): void
+    {
+        if ($updateComment !== null) {
+            $this->view->assign('updateComment', $updateComment);
+        }
+
+        // Get name of unregistered user
+        if ($updateComment !== null && $updateComment->getAuthorName()) {
+            $unregisteredUserName = $updateComment->getAuthorName();
+        } else {
+            $unregisteredUserName = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tx_pwcomments_unregisteredUserName');
+        }
+
+        // Get mail of unregistered user
+        if ($updateComment !== null && $updateComment->getAuthorMail()) {
+            $unregisteredUserMail = $updateComment->getAuthorMail();
+        } else {
+            $unregisteredUserMail = $GLOBALS['TSFE']->fe_user->getKey('ses', 'tx_pwcomments_unregisteredUserMail');
+        }
+
+        $this->view->assign('unregisteredUserName', $unregisteredUserName);
+        $this->view->assign('unregisteredUserMail', $unregisteredUserMail);
+    }
+
+    /**
+     * Update action
+     *
+     * @param Comment|null $updateComment
+     * @return bool
+     * @throws StopActionException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
+     * @TYPO3\CMS\Extbase\Annotation\Validate("T3\PwComments\Domain\Validator\CommentValidator", param="updateComment")
+     */
+    public function updateAction(Comment $updateComment = null): bool
+    {
+        // Hidden field Spam-Protection
+        if (isset($this->settings['hiddenFieldSpamProtection']) && $this->settings['hiddenFieldSpamProtection']
+            && $this->request->hasArgument($this->settings['hiddenFieldName'])
+            && $this->request->getArgument($this->settings['hiddenFieldName'])) {
+            $this->redirectToUri($this->buildUriByUid($this->pageUid) . '#' . $this->settings['updateCommentAnchor']);
+            return false;
+        }
+        if ($updateComment === null) {
+            $this->redirectToUri($this->buildUriByUid($this->pageUid));
+            return false;
+        }
+        $this->createAuthorIdent();
+
+        $updateComment->setMessage(
+            StringUtility::prepareCommentMessage($updateComment->getMessage(), $this->settings['linkUrlsInComments'])
+        );
+
+        $GLOBALS['TSFE']->fe_user->setKey('ses', 'tx_pwcomments_lastComment', time());
+
+        $translateArguments = [
+            'name' => $updateComment->getAuthorName(),
+            'email' => $updateComment->getCommentAuthorMailAddress(),
+            'message' => $updateComment->getMessage(),
+        ];
+
+        // Modify comment if moderation is active
+        if (isset($this->settings['moderateNewComments']) && $this->settings['moderateNewComments']) {
+            $updateComment->setHidden(true);
+            $this->addFlashMessage(
+                LocalizationUtility::translate('tx_pwcomments.moderationNotice', 'PwComments', $translateArguments)
+            );
+        } else {
+            $this->addFlashMessage(
+                LocalizationUtility::translate('tx_pwcomments.updateSuccess', 'PwComments', $translateArguments)
+            );
+        }
+
+        $this->commentRepository->update($updateComment);
+        $this->getPersistenceManager()->persistAll();
+        $newsRepository = GeneralUtility::makeInstance(NewsRepository::class);
+        $news = $newsRepository->findByUid($updateComment->getEntryUid());
+
+
+        if (isset($this->settings['sendMailOnNewCommentsToNewsAuthor']) && $this->settings['sendMailOnNewCommentsToNewsAuthor']) {
+            $newsRepository = GeneralUtility::makeInstance(NewsRepository::class);
+            $news = $newsRepository->findByUid($updateComment->getEntryUid());
+            $this->mailUtility->setFluidTemplate($this->makeFluidTemplateObject());
+            $this->mailUtility->setControllerContext($this->controllerContext);
+            $this->mailUtility->setReceivers($news->getAuthorEmail());
+            $this->mailUtility->setTemplatePath($this->settings['sendMailNewsAuthorUpdateTemplate']);
+            $this->mailUtility->setSubjectLocallangKey('tx_pwcomments.notificationMail.update.subject');
+            $this->mailUtility->sendMail($updateComment, HashEncryptionUtility::createHashForComment($updateComment));
+        }
+
+        if (isset($this->settings['sendMailOnNewCommentsTo']) && $this->settings['sendMailOnNewCommentsTo']) {
+            $this->mailUtility->setFluidTemplate($this->makeFluidTemplateObject());
+            $this->mailUtility->setControllerContext($this->controllerContext);
+            $this->mailUtility->setReceivers($this->settings['sendMailOnNewCommentsTo']);
+            $this->mailUtility->setTemplatePath($news === null ? $this->settings['sendMailUpdateTemplate'] : $this->settings['sendMailNewsAuthorUpdateTemplate']);
+            $this->mailUtility->setSubjectLocallangKey('tx_pwcomments.notificationMail.update.subject');
+            $this->mailUtility->sendMail($updateComment, HashEncryptionUtility::createHashForComment($updateComment));
+        }
+
+        if (isset($this->settings['sendMailToAuthorAfterSubmit']) &&
+            $this->settings['sendMailToAuthorAfterSubmit'] &&
+            $updateComment->hasCommentAuthorMailAddress()
+        ) {
+            $this->mailUtility->setFluidTemplate($this->makeFluidTemplateObject());
+            $this->mailUtility->setControllerContext($this->controllerContext);
+            $this->mailUtility->setReceivers($updateComment->getCommentAuthorMailAddress());
+            $this->mailUtility->setTemplatePath($news === null ? $this->settings['sendMailToAuthorAfterSubmitUpdateTemplate'] : $this->settings['sendMailNewsAuthorUpdateTemplate']);
+            $this->mailUtility->setSubjectLocallangKey('tx_pwcomments.notificationMail.update.subject');
+            $this->mailUtility->sendMail($updateComment);
+        }
+
+        if (isset($this->settings['moderateNewComments']) && $this->settings['moderateNewComments']) {
+            $anchor = '#' . $this->settings['successfulAnchor'];
+        } else {
+            $anchor = '#' . $this->settings['commentAnchorPrefix'] . $updateComment->getUid();
+        }
+
+        $this->redirectToUri($this->buildUriByUid($this->pageUid, true) . $anchor);
+    }
+
+    /**
+     * Delete action
+     *
+     * @param string $commentUid Comment
+     * @return void
+     *
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("commentUid")
+     */
+    public function deleteAction(string $commentUid): void
+    {
+        $comment = $this->commentRepository->findByCommentUid($commentUid);
+        if (null !== $comment) {
+            $votes = $comment->getVotes()->toArray();
+            if (!empty($votes)) {
+                foreach ($votes as $vote) {
+                    $this->commentRepository->remove($vote);
+                }
+            }
+            $replies = $comment->getReplies()->toArray();
+            if ($replies !== null) {
+                foreach ($replies as $reply) {
+                    $this->commentRepository->remove($reply);
+                    $replyVotes = $reply->getVotes()->toArray();
+                    if (!empty($replyVotes)) {
+                        foreach ($replyVotes as $replyVote) {
+                            $this->commentRepository->remove($replyVote);
+                        }
+                    }
+                }
+            }
+            $this->commentRepository->remove($comment);
+            $this->addFlashMessage(
+                LocalizationUtility::translate('tx_pwcomments.custom.deletedComment', 'PwComments')
+            );
+        }
+
+        $this->redirectToUri($this->buildUriByUid($this->pageUid, true));
     }
 
     /**

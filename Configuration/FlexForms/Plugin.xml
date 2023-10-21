@@ -16,11 +16,11 @@
                                 <items>
                                     <numIndex index="1">
                                         <numIndex index="0">LLL:EXT:pw_comments/Resources/Private/Language/locallang_db.xlf:plugin.mode.index</numIndex>
-                                        <numIndex index="1">Comment->index;Comment->upvote;Comment->downvote</numIndex>
+                                        <numIndex index="1">Comment->index;Comment->upvote;Comment->downvote;Comment->delete</numIndex>
                                     </numIndex>
                                     <numIndex index="2">
-                                        <numIndex index="0">LLL:EXT:pw_comments/Resources/Private/Language/locallang_db.xlf:plugin.mode.new</numIndex>
-                                        <numIndex index="1">Comment->new;Comment->create;Comment->confirmComment</numIndex>
+                                    <numIndex index="0">LLL:EXT:pw_comments/Resources/Private/Language/locallang_db.xlf:plugin.mode.new</numIndex>
+                                        <numIndex index="1">Comment->new;Comment->create;Comment->edit;Comment->update;Comment->confirmComment</numIndex>
                                     </numIndex>
                                 </items>
                             </config>

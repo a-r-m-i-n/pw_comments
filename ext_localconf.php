@@ -17,10 +17,10 @@ $boot = function ($extensionKey) {
         $extensionKey,
         'Pi1',
         [
-            \T3\PwComments\Controller\CommentController::class => 'index,new,create,upvote,downvote,confirmComment',
+            \T3\PwComments\Controller\CommentController::class => 'index,new,create,upvote,downvote,confirmComment,edit,update,delete',
         ],
         [
-            \T3\PwComments\Controller\CommentController::class => 'index,new,create,upvote,downvote,confirmComment',
+            \T3\PwComments\Controller\CommentController::class => 'index,new,create,upvote,downvote,confirmComment,edit,update,delete',
         ]
     );
 

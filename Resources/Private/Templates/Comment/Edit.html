@@ -1,0 +1,55 @@
+{namespace pw=T3\PwComments\ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="main">
+	<div id="{settings.updateCommentAnchor}">
+		<h3><f:translate key="tx_pwcomments.editComment" /></h3>
+
+		<f:form name="updateComment" object="{updateComment}" action="update" section="{settings.updateCommentAnchor}" addQueryString="true">
+			<div class="typo3-messages">
+				<a id="{settings.successfulAnchor}"></a>
+				<f:flashMessages />
+				<f:render partial="Comment/FormErrors/ValidationResults" />
+			</div>
+
+			<f:if condition="{settings.replaceUsernameWith}">
+				<f:then>
+					<f:format.raw>{settings.replaceUsernameWith}</f:format.raw>
+				</f:then>
+				<f:else>
+					<div><label><f:translate key="tx_pwcomments.comment.name" /></label><f:form.textfield property="authorName" value="{unregisteredUserName}" /></div>
+				</f:else>
+			</f:if>
+
+			<f:if condition="{settings.replaceMailWith}">
+				<f:then>
+					<f:format.raw>{settings.replaceMailWith}</f:format.raw>
+				</f:then>
+				<f:else>
+					<div><label><f:translate key="tx_pwcomments.comment.mail" /></label><f:form.textfield property="authorMail" value="{unregisteredUserMail}" /></div>
+				</f:else>
+			</f:if>
+
+
+			<div class="{settings.hiddenFieldClass}"><label><f:translate key="tx_pwcomments.comment.hiddenField" /></label><f:form.textfield name="{settings.hiddenFieldName}" /></div>
+
+			<div><label><f:translate key="tx_pwcomments.comment.comment" /></label><f:form.textarea property="message" rows="8" cols="40" /></div>
+
+			<f:if condition="{settings.requireAcceptedTerms}">
+				<div>
+					<label>
+						<f:form.checkbox property="termsAccepted" value="1" />
+						<f:translate key="tx_pwcomments.comment.termsBefore" /><f:link.typolink parameter="{settings.termsTypolinkParameter}"><f:translate key="tx_pwcomments.comment.terms" /></f:link.typolink><f:translate key="tx_pwcomments.comment.termsAfter" />
+					</label>
+				</div>
+			</f:if>
+
+			<f:if condition="{settings.enableRepliesToComments}">
+				<f:if condition="{commentToReplyTo}">
+					<f:form.hidden property="parentComment" value="{commentToReplyTo}" />
+				</f:if>
+			</f:if>
+			<f:form.submit value="{f:translate(key:'tx_pwcomments.comment.submit')}" class="button" />
+		</f:form>
+	</div>
+</f:section>

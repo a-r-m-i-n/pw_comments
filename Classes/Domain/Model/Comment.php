@@ -40,6 +40,13 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $crdate;
 
     /**
+     * tstamp as unix timestamp
+     *
+     * @var int
+     */
+    protected $tstamp;
+
+    /**
      * hidden state
      *
      * @var bool
@@ -183,6 +190,27 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * Getter for tstamp
+     *
+     * @return int tstamp
+     */
+
+    public function getTstamp()
+    {
+        return $this->tstamp;
+    }
+    /**
+     * Setter for tstamp
+     *
+     * @param int $tstamp tstamp
+     * @return void
+     */
+    public function setTstamp($tstamp)
+    {
+        $this->tstamp = $tstamp;
+    }
+
+    /**
      * Getter for crdate
      *
      * @return int crdate
@@ -191,6 +219,7 @@ class Comment extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->crdate;
     }
+
 
     /**
      * Setter for hidden state

@@ -20,6 +20,7 @@ Property                               Type
 moderateNewComments_                   boolean
 sendMailOnNewCommentsTo_               string
 sendMailTemplate_                      string
+sendMailUpdateTemplate_                string
 sendMailMimeType_                      string
 ===================================== ========
 
@@ -67,6 +68,22 @@ sendMailTemplate
       EXT:pw_comments/[...]/mail.html
    Description
       Defines the path to the Fluid template which should be used for notification e-mails
+
+
+.. _sendMailUpdateTemplate:
+
+sendMailUpdateTemplate
+""""""""""""""""
+.. container:: table-row
+
+   Property
+      sendMailUpdateTemplate
+   Data type
+      string
+   Default
+      EXT:pw_comments/[...]/updateMail.html
+   Description
+      Defines the path to the Fluid template which should be used for notification e-mails on editing
 
 .. _sendMailMimeType:
 

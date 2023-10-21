@@ -31,6 +31,8 @@ plugin.tx_pwcomments {
       showCommentAnchor = comments
       # cat=plugin.tx_pwcomments/anchors; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.writeCommentAnchor
       writeCommentAnchor = writeComment
+      # cat=plugin.tx_pwcomments/anchors; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.updateCommentAnchor
+      updateCommentAnchor = updateComment
       # cat=plugin.tx_pwcomments/anchors; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.successfulAnchor
       successfulAnchor = thanksForYourComment
       # cat=plugin.tx_pwcomments/anchors; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.customMessagesAnchor
@@ -57,6 +59,11 @@ plugin.tx_pwcomments {
       # cat=plugin.tx_pwcomments/replying; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.countReplies
       countReplies = 1
 
+      # cat=plugin.tx_pwcomments/replying; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.enableEditingComments
+      enableEditingComments = 0
+      # cat=plugin.tx_pwcomments/replying; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.enableDeletingComments
+      enableDeletingComments = 0
+
       # cat=plugin.tx_pwcomments/sorting; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.invertCommentSorting
       invertCommentSorting = 0
       # cat=plugin.tx_pwcomments/sorting; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.invertReplySorting
@@ -66,8 +73,16 @@ plugin.tx_pwcomments {
       moderateNewComments = 1
       # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailOnNewCommentsTo
       sendMailOnNewCommentsTo =
+      # cat=plugin.tx_pwcomments/moderation; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailOnNewCommentsToNewsAuthor
+      sendMailOnNewCommentsToNewsAuthor = 0
       # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailTemplate
       sendMailTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/mail.html
+      # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailUpdateTemplate
+      sendMailUpdateTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/updateMail.html
+      # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailNewsAuthorTemplate
+      sendMailNewsAuthorTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/newsMail.html
+      # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailNewsAuthorUpdateTemplate
+      sendMailNewsAuthorUpdateTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/updateNewsMail.html
       # cat=plugin.tx_pwcomments/moderation; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailMimeType
       sendMailMimeType = text/plain
 
@@ -90,6 +105,8 @@ plugin.tx_pwcomments {
       sendMailToAuthorAfterSubmit = 0
       # cat=plugin.tx_pwcomments/mails; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailToAuthorAfterSubmitTemplate
       sendMailToAuthorAfterSubmitTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/mailToAuthorAfterSubmit.html
+      # cat=plugin.tx_pwcomments/mails; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailToAuthorAfterSubmitUpdateTemplate
+      sendMailToAuthorAfterSubmitUpdateTemplate = EXT:pw_comments/Resources/Private/Templates/MailNotification/mailToAuthorAfterUpdateSubmit.html
       # cat=plugin.tx_pwcomments/mails; type=boolean; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailToAuthorAfterPublish
       sendMailToAuthorAfterPublish = 0
       # cat=plugin.tx_pwcomments/mails; type=string; label= LLL:EXT:pw_comments/Resources/Private/Language/locallang_constants.xlf:settings.sendMailToAuthorAfterPublishTemplate

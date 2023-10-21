@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
     <file source-language="en" target-language="de" datatype="plaintext" original="messages" product-name="pw_comments">
-		<header/>
-		<body>
-			<trans-unit id="anchors" xml:space="preserve">
+        <header/>
+        <body>
+            <trans-unit id="anchors" xml:space="preserve">
 				<source>Anchors</source>
 			</trans-unit>
-			<trans-unit id="gravatar" xml:space="preserve">
+            <trans-unit id="gravatar" xml:space="preserve">
 				<source>Gravatar</source>
 			</trans-unit>
-			<trans-unit id="entryuid" xml:space="preserve">
+            <trans-unit id="entryuid" xml:space="preserve">
 				<source>Entry Uid</source>
 			</trans-unit>
-			<trans-unit id="replying" xml:space="preserve">
+            <trans-unit id="replying" xml:space="preserve">
 				<source>Replying to comments</source>
 			</trans-unit>
-			<trans-unit id="sorting" xml:space="preserve">
+            <trans-unit id="sorting" xml:space="preserve">
 				<source>Sorting</source>
 			</trans-unit>
-			<trans-unit id="voting" xml:space="preserve">
+            <trans-unit id="voting" xml:space="preserve">
 				<source>Voting</source>
 			</trans-unit>
-			<trans-unit id="moderation" xml:space="preserve">
+            <trans-unit id="moderation" xml:space="preserve">
 				<source>Moderation</source>
 			</trans-unit>
-			<trans-unit id="mails" xml:space="preserve">
+            <trans-unit id="mails" xml:space="preserve">
 				<source>Mails</source>
 			</trans-unit>
-			<trans-unit id="spamprotect" xml:space="preserve">
+            <trans-unit id="spamprotect" xml:space="preserve">
 				<source>Spam protection</source>
 			</trans-unit>
-			<trans-unit id="misc" xml:space="preserve">
+            <trans-unit id="misc" xml:space="preserve">
 				<source>Miscellaneous</source>
 			</trans-unit>
 
 
-			<trans-unit id="settings.commentAnchorPrefix" xml:space="preserve">
+            <trans-unit id="settings.commentAnchorPrefix" xml:space="preserve">
 				<source>Comment anchor prefix: Every comment gets an own anchor which contains the uid of the comment. In the default case the anchor will look something like that: #comment1337.</source>
 			</trans-unit>
             <trans-unit id="settings.showCommentAnchor" xml:space="preserve">
@@ -176,6 +176,30 @@
             <trans-unit id="settings.termsTypolinkParameter" xml:space="preserve">
                 <source>Typolink parameters to terms (in string, next to checkbox to click)</source>
 			</trans-unit>
-		</body>
-	</file>
+            <trans-unit id="settings.updateCommentAnchor" xml:space="preserve">
+                <source>Edit Comment Anchor: This label will appear above the comment editing form.</source>
+            </trans-unit>
+            <trans-unit id="settings.enableEditingComments" xml:space="preserve">
+                <source>Allow Authors to Edit Their Own Comments</source>
+            </trans-unit>
+            <trans-unit id="settings.enableDeletingComments" xml:space="preserve">
+                <source>Allow Authors to Delete Their Own Comments</source>
+            </trans-unit>
+            <trans-unit id="settings.sendMailOnNewCommentsToNewsAuthor" xml:space="preserve">
+                <source>Notify News Article Author via Email When Commented On</source>
+            </trans-unit>
+            <trans-unit id="settings.sendMailNewsAuthorTemplate" xml:space="preserve">
+                <source>Email Template for News Author: Specifies the Fluid template path for notification emails.</source>
+            </trans-unit>
+            <trans-unit id="settings.sendMailToAuthorAfterSubmitUpdateTemplate" xml:space="preserve">
+                <source>Email Template After Comment Editing: Specifies the Fluid template path for post-submission notification emails.</source>
+            </trans-unit>
+            <trans-unit id="settings.sendMailNewsAuthorUpdateTemplate" xml:space="preserve">
+                <source>Email Template After Comment Editing: Specifies the Fluid template path for updated notification emails.</source>
+            </trans-unit>
+            <trans-unit id="settings.sendMailUpdateTemplate" xml:space="preserve">
+                <source>Email Template After Comment Editing: Specifies the Fluid template path for generic notification emails.</source>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

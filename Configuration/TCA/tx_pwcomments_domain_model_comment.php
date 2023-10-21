@@ -94,6 +94,13 @@ return [
                 'type' => 'input'
             ]
         ],
+        'tstamp' => [
+            'exclude' => 0,
+            'label' => $ll . 'general.tstamp',
+            'config' => [
+                'type' => 'input'
+            ]
+        ],
         'hidden' => [
             'exclude' => 0,
             'label' => $ll . 'general.hidden',
