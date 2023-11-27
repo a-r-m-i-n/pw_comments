@@ -93,7 +93,7 @@ $boot = function ($extensionKey) {
         $iconRegistry->registerIcon(
             'ext-pwcomments-ext-icon',
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:pw_comments/ext_icon.svg']
+            ['source' => 'EXT:pw_comments/Resources/Public/Icons/Extension.svg']
         );
 
         // @codingStandardsIgnoreStart
